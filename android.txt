@@ -1,0 +1,3 @@
+title=MorseCode Converter
+author=MYJ
+orientation=potrait 

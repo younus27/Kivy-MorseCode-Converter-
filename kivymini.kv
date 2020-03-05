@@ -1,0 +1,354 @@
+#: kivy 1.10.1
+#: import ScreenManager kivy.uix.screenmanager.ScreenManager
+#: import Screen kivy.uix.screenmanager.ScreenManager
+#: import ScreenOne screen
+#: import ScreenTwo screen
+#: import ScreenThree screen
+#: import ScreenHelp screen
+#: import ScreenAbout screen
+#: import ScreenRecent screen
+
+ScreenManager:
+    id: screen_manager
+    #transition: FadeTransition()
+    ScreenOne:
+        id: screen_one
+        name: 'screen_one'
+        manager: 'screen_manager'
+    ScreenTwo:
+        id: screen_two
+        name: 'screen_two'
+        manager: 'screen_manager'
+
+    ScreenThree:
+        id: screen_three
+        name: 'screen_three'
+        manager: 'screen_manager'
+    ScreenHelp:
+        id: screen_help
+        name: 'screen_help'
+        manager: 'screen_manager'
+    ScreenAbout:
+        id: screen_about
+        name: 'screen_about'
+        manager: 'screen_manager'
+    ScreenRecent:
+        id: screen_recent
+        name: 'screen_recent'
+        manager: 'screen_manager'
+
+
+<ScreenOne>:
+	canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'img2.jpg'
+    StackLayout:
+        orientation: "lr-tb"
+        spacing: 30
+        padding: 30
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint:.15,.1
+
+            Spinner:
+                text: " [|||] "
+                values: ["Help", "About", "Recent"]
+                id: spinner_id
+                on_text:
+                	if spinner_id.text=="Help":app.root.current='screen_help'
+                	elif spinner_id.text=="About":app.root.current='screen_about'
+                	elif spinner_id.text=="Recent":app.root.current='screen_recent'
+                	else:app.root.current='screen_one'
+        Label:
+        	size_hint: 1, .10
+        	text:""
+        Label:
+        	size_hint: 1, .10
+        	text:""
+        Label:
+        	size_hint: 1, .10
+        	text:""
+ 
+        Button:
+            text: "English to Morse Code"
+            font_size:24
+            size_hint: .4, .10
+            color:0,1,0,1
+            on_press:
+                app.root.transition.direction = 'left'
+                app.root.current = 'screen_two'
+        Label:
+        	size_hint: 1, .010
+        	text:""
+        Button:
+            text: "Morse Code to English"
+            color:0,1,0,1
+            font_size:24
+            on_press:
+                app.root.transition.direction = 'left'
+                app.root.current = 'screen_three'
+            size_hint: .4, .10
+        Label:
+        	size_hint: .2, .010
+        	text:""
+        Button:
+        	color:1,0,0,1
+        	font_size:24
+            id:btnExit
+            size_hint: .4, .10
+            text:"Exit"
+            on_press: app.stop()
+
+<ScreenTwo>:
+	canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'img2.jpg'
+	id : pageone
+    GridLayout:
+        
+        display:entry
+        rows:4
+        padding:20
+        #spacing:20
+        BoxLayout:
+            Label:
+                text:""
+        StackLayout:
+       
+            TextInput:
+                id:entry
+                font_size:32
+                size_hint:.75,.5
+                multiline:False
+            Button:
+                text:"Go"
+                color:0,1,0,1
+                size_hint:.25,.5
+                on_release: 
+                    root.textVar=pageone.go(entry)
+
+        StackLayout:
+        	Button:
+        	    text:"Copy"
+        	    color:0,0,1,1
+                size_hint:.1,.5
+                on_release:pageone.copy1(root.textVar)            	
+            Label:
+                text:root.textVar
+                font_size:18
+                size_hint:.65,.5
+            Button:
+                text:"Clear"
+                color:0,0,1,1
+                size_hint:.25,.5
+                on_release:
+                	root.textVar=""
+                	entry.text=""
+
+        FloatLayout:
+            Button:
+            	id:speak
+                text:"Speak"
+                size_hint:.25,.5
+                pos_hint: {"left": .9, "bottom": 0}
+            Button:
+                text: "Back"
+                color:1,0,0,1
+                size_hint:.25,.5
+                pos_hint: {"right": 1, "bottom": 0}
+                on_press:
+                    app.root.transition.direction = 'right'
+                    app.root.current = 'screen_one'
+<ScreenThree>:
+	canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'img2.jpg'
+	id : pagetwo
+    GridLayout:
+        
+        disply:entry
+        rows:4
+        
+        StackLayout:
+            padding:30
+
+
+            Label:
+                text:"A  .-       B  -...       C  -.-.     P  .--.       Q --.-       R  .-.     1  .----     2  ..---       3  ...--  "
+                font_size:12
+
+                size_hint:.75,.2
+            Label:
+                text:"D  -..      E  .          F  ..-.     S  ...        T  -         U  ..-     4  ....-     5  .....       6  -....  "
+                size_hint:.75,.2
+                font_size:12
+            Label:
+                text:"G  --.      H  ....       I  ..       V  ...-       W  .--       X  -..-    7  --...     8  ---..       9  ----.  "
+                size_hint:.75,.2
+                font_size:12
+            Label:
+
+                text:"J  .---     K  -.-        L  .-..     Y  -.--       Z  --..      0  -----   ,   --..--   .  .-.-.-      ?  ..--..      "
+                font_size:12
+                size_hint:.75,.2
+            Label:
+                text:"M  --       N  -.         O  ---      /  -..-.      -  -....-    (  -.--.   )  -.--.-                                  "
+                font_size:12
+                size_hint:.75,.2
+        StackLayout:
+            TextInput:
+                id:entry
+                font_size:32
+                size_hint:.75,.5
+                multiline:False
+            Button:
+                text:"Go"
+                color:0,1,0,1
+                size_hint:.25,.5
+                on_release: 
+                    root.morseVar=pagetwo.go2(entry)
+        StackLayout:
+        	Button:
+        	    text:"Copy"
+        	    color:0,0,1,1
+                size_hint:.1,.5
+                on_release:pagetwo.copy2(entry.text)  
+            Label:
+                text:root.morseVar
+                color:1,1,1,1
+                font_size:32
+                size_hint:.65,.5
+            Button:
+                text:"Clear"
+                color:0,0,1,1
+                size_hint:.25,.5
+                on_release:
+                	root.morseVar=""
+                	entry.text=""
+        FloatLayout:
+            Button:
+                text: "Back"
+                color:1,0,0,1
+                size_hint:.25,.5
+                pos_hint: {"right": 1, "bottom": 0}
+                on_press:
+                    app.root.transition.direction = 'right'
+                    app.root.current = 'screen_one'
+<ScreenAbout>:
+	canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'img2.jpg'
+    StackLayout:
+        StackLayout:
+            Label:
+                text:"Sample Text"
+                size_hint:.75,.5
+        FloatLayout:
+            Button:
+                text: "Back"
+                color:1,0,0,1
+                size_hint:.20,.12
+                pos_hint: {"right": 1, "bottom": 0}
+                on_press:
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'screen_one'
+<ScreenHelp>:
+    StackLayout:
+        StackLayout:
+        	padding:10
+            Label:
+                text:"MORSE CODE"
+                font_size:12              
+                size_hint:.95,.2
+            Label:
+                text:"Morse code is a character encoding scheme used in telecommunication that encodes text characters"
+                font_size:12
+
+                size_hint:.95,.05
+            Label:
+                text:"as standardized sequences of two different signal durations called dots and dashes or dits and dahs."
+                size_hint:.95,.05
+                font_size:12
+            Label:
+                text:"The International Morse Code encodes the 26 English letters A through Z,"
+                size_hint:.95,.05
+                font_size:12
+            Label:
+
+                text:"There is no distinction between upper and lower case letters."
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"Each Morse code symbol is formed by a sequence of dots and dashes. "
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"The dot duration is the basic unit of time measurement in Morse code transmission."
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"The duration of a dash is three times the duration of a dot."
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"Each dot or dash within a character is followed by period of signal absence, called a space, equal to the dot duration. "
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"The letters of a word are separated by a space of duration equal to three dots,"
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:" and the words are separated by a space equal to seven dots."
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"To increase the efficiency of encoding, Morse code was designed so that the length of each symbol is approximately "
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:"inverse to the frequency of occurrence in text of the English language character that it represent"
+                font_size:12
+                size_hint:.95,.05
+
+            Label:
+                text:""
+                font_size:12
+                size_hint:.95,.05
+            Label:
+                text:""
+                font_size:12
+                size_hint:.75,.05
+        
+        FloatLayout:
+            Button:
+                text: "Back"
+                color:1,0,0,1
+                size_hint:.20,.12
+                pos_hint: {"right": 1, "bottom": 0}
+                on_press:
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'screen_one'
+<ScreenRecent>:
+    StackLayout:
+        StackLayout:
+            Label:
+                text:"Sample Text"
+                size_hint:.75,.5
+        FloatLayout:
+            Button:
+                text: "Back"
+                color:1,0,0,1
+                size_hint:.20,.12
+                pos_hint: {"right": 1, "bottom": 0}
+                on_press:
+                    app.root.transition.direction = 'left'
+                    app.root.current = 'screen_one'
